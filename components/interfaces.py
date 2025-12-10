@@ -32,7 +32,7 @@ class IGenerator(ABC):
 # --------------------------------
 class IEmbedder(ABC):
     """
-    Interface cho embedding providers (SentenceTransformer, OpenAI embedding, v.v.)
+    Interface embedding providers (SentenceTransformer, OpenAI embedding, v.v.)
     """
 
     @abstractmethod
@@ -89,4 +89,21 @@ class IVectorDatabase(ABC):
         """
         Xoá documents theo ID.
         """
+        pass
+
+
+class ISQLDatabase(ABC):
+    """
+    Abstraction layer for SQL database access used by AI service.
+    Implementation examples: PostgresDatabase, MySQLDatabase, SQLiteDatabase.
+    """
+
+    @abstractmethod
+    def run(self, query: str) -> Any:
+        """Execute SQL query and return result (DataFrame or list[dict])."""
+        pass
+
+    @abstractmethod
+    def get_table_info(self, table_names: Optional[List[str]] = None) -> str:
+        """Return table schema used for SQL Agent."""
         pass
