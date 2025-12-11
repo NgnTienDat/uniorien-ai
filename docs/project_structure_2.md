@@ -5,6 +5,7 @@ uniorien-chatbot-service/
 │   └── utils.py     # Utility chung (nếu cần, ví dụ: format response)
 ├── components
 │   ├── database
+│   │   ├── postgres_db.py
 │   │   └── chroma_db.py  # VectorDB implementation, cung cấp phương thức truy vấn vector database
 │   ├── embedding
 │   │   ├── ollama_embedder.py         # Optional fallback

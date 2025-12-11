@@ -1,16 +1,17 @@
+# components/manager.py
 from __future__ import annotations
 import os
 from typing import Optional, Dict
 
-from components.interfaces import ISQLDatabase
-from interfaces import IGenerator, IEmbedder, IVectorDatabase
+from components.interfaces import (
+    IGenerator,
+    IEmbedder,
+    IVectorDatabase,
+    ISQLDatabase,
+)
 
 
 class GenerationManager:
-    """
-    Quản lý các LLM providers: OpenAI (main), Ollama (fallback).
-    """
-
     _instance: Optional["GenerationManager"] = None
 
     def __init__(self):
@@ -41,10 +42,6 @@ class GenerationManager:
 
 
 class EmbeddingManager:
-    """
-    Quản lý embedder (SentenceTransformer).
-    """
-
     _instance: Optional["EmbeddingManager"] = None
 
     def __init__(self):
@@ -59,31 +56,28 @@ class EmbeddingManager:
     def configure(self, embedder: IEmbedder):
         self.embedder = embedder
 
-    def embed(self, text: str):
+    def get_embedder(self) -> IEmbedder:
         if not self.embedder:
             raise RuntimeError("EmbeddingManager is not configured.")
-        return self.embedder.embed(text)
+        return self.embedder
+
+    def embed(self, text: str):
+        return self.get_embedder().embed(text)
 
     def embed_batch(self, texts: list[str]):
-        if not self.embedder:
-            raise RuntimeError("EmbeddingManager is not configured.")
-        return self.embedder.embed_batch(texts)
+        return self.get_embedder().embed_batch(texts)
 
 
-class VectorDBManager:
-    """
-    Quản lý vector database (ChromaDB).
-    """
-
-    _instance: Optional["VectorDBManager"] = None
+class VectorDatabaseManager:
+    _instance: Optional["VectorDatabaseManager"] = None
 
     def __init__(self):
         self.db: Optional[IVectorDatabase] = None
 
     @classmethod
-    def instance(cls) -> "VectorDBManager":
+    def instance(cls) -> "VectorDatabaseManager":
         if cls._instance is None:
-            cls._instance = VectorDBManager()
+            cls._instance = VectorDatabaseManager()
         return cls._instance
 
     def configure(self, db: IVectorDatabase):
@@ -106,10 +100,6 @@ class VectorDBManager:
 
 
 class PromptManager:
-    """
-    Tải và cache prompt .txt từ thư mục /prompt.
-    """
-
     _instance: Optional["PromptManager"] = None
 
     def __init__(self):
@@ -124,9 +114,6 @@ class PromptManager:
         return cls._instance
 
     def load(self, name: str) -> str:
-        """
-        name: tên file không kèm path (vd: 'intent_classification.txt')
-        """
         if name in self.cache:
             return self.cache[name]
 
@@ -142,15 +129,6 @@ class PromptManager:
 
 
 class SQLDatabaseManager:
-    """
-    Singleton manager for the SQL database instance.
-
-    Responsibilities:
-    - Hold a single instance of ISQLDatabase.
-    - Ensure the database is configured before being used.
-    - Provide global access point for SQL-related operations in AI service.
-    """
-
     _instance: Optional["SQLDatabaseManager"] = None
 
     def __init__(self):
@@ -163,19 +141,12 @@ class SQLDatabaseManager:
         return cls._instance
 
     def configure(self, db: ISQLDatabase) -> None:
-        """
-        Configure the database. Must be called once during app startup.
-        """
         self.db = db
 
     def is_configured(self) -> bool:
         return self.db is not None
 
     def get_db(self) -> ISQLDatabase:
-        """
-        Return the configured database instance.
-        Raise detailed error if database is not ready.
-        """
         if not self.db:
             raise RuntimeError(
                 "SQLDatabaseManager is not configured. "

@@ -1,52 +1,34 @@
-# components/database/postgres_db.py
-from __future__ import annotations
-from typing import Optional, List, Any
-from langchain_community.utilities import SQLDatabase
+import psycopg2
+import psycopg2.extras
 from components.interfaces import ISQLDatabase
 
 
 class PostgresDatabase(ISQLDatabase):
-    """
-    Concrete implementation of ISQLDatabase using LangChain SQLDatabase wrapper.
-    """
+    def __init__(self, db_uri: str, include_tables=None):
+        self.db_uri = db_uri
 
-    def __init__(self, db_uri: str, include_tables: Optional[List[str]] = None):
-        self.db = SQLDatabase.from_uri(
-            db_uri,
-            include_tables=include_tables,      # Whitelist bảng được phép truy cập
-            sample_rows_in_table_info=3,
-        )
+    def _get_conn(self):
+        return psycopg2.connect(self.db_uri)
 
-    def run(self, query: str) -> Any:
+    def run(self, query: str):
         """
-        Execute SQL query.
-        LangChain SQLDatabase.run() may return a string, so we normalize it.
+        Trả về list[dict] thay vì string table.
+        Đây là lựa chọn A2 – sạch, dễ dùng, không cần parse.
         """
+        conn = self._get_conn()
         try:
-            raw = self.db.run(query)
-            return self._normalize_result(raw)
-        except Exception as e:
-            raise RuntimeError(f"Database query failed: {str(e)}")
+            with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                cur.execute(query)
+                return cur.fetchall()  # list[dict]
+        finally:
+            conn.close()
 
-    def get_table_info(self, table_names: Optional[List[str]] = None) -> str:
-        """
-        Schema information used by SQL Agent.
-        """
-        try:
-            return self.db.get_table_info(table_names)
-        except Exception as e:
-            raise RuntimeError(f"Failed to load table info: {str(e)}")
+    def get_table_info(self, table_names=None) -> str:
+        # LangChain SQL Agent vẫn cần string schema → dùng SQLDatabase
+        from langchain_community.utilities import SQLDatabase
 
-    def _normalize_result(self, raw: Any) -> Any:
-        """
-        Convert raw response from LangChain SQLDatabase to a cleaner format.
-        If LangChain returns a string table, keep it (SQL Agent expects this).
-        """
-        if isinstance(raw, str):
-            return raw
-
-        # Nếu sau này bạn muốn parse thành DataFrame hoặc list[dict], làm tại đây.
-        return raw
+        db = SQLDatabase.from_uri(self.db_uri, include_tables=table_names)
+        return db.get_table_info(table_names)
 
 
 
