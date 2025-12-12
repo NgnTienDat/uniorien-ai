@@ -6,10 +6,6 @@ from services.ingestion.sources.base_source import BaseIngestionSource, RawDocum
 
 
 class PostgresCommentsSource(BaseIngestionSource):
-    """
-    Ingest từ bảng university_comments (review của sinh viên).
-    """
-
     QUERY = """
         SELECT 
             id,
@@ -21,7 +17,7 @@ class PostgresCommentsSource(BaseIngestionSource):
     """
 
     def load(self) -> List[RawDocument]:
-        db = SQLDatabaseManager.instance().get_db()
+        db = SQLDatabaseManager.instance().get_db()   # create or get existing connection
         rows: List[Dict[str, Any]] = db.run(self.QUERY)  # list[dict]
 
         documents: List[RawDocument] = []
@@ -32,7 +28,7 @@ class PostgresCommentsSource(BaseIngestionSource):
                 "type": "review",
                 "source_table": "university_comments",
                 "source_id": row["id"],
-                "created_at": row.get("created_at"),
+                "created_at": str(row.get("created_at")),
             }
             documents.append(RawDocument(id=doc_id, text=row["text"], metadata=metadata))
 

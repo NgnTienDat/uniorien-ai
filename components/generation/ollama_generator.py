@@ -20,7 +20,7 @@ class OllamaGenerator(IGenerator):
         system_prompt: str,
         user_prompt: str,
         context: Optional[List[Dict[str, str]]] = None,
-        temperature: float = 0.4,
+        temperature: float = 0.3,
         max_tokens: int = 1024,
     ) -> str:
 

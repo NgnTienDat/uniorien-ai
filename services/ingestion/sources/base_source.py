@@ -1,4 +1,3 @@
-# service/ingestion/sources/base_source.py
 from __future__ import annotations
 from typing import List, Dict, Any
 from dataclasses import dataclass
@@ -13,7 +12,7 @@ class RawDocument:
 
 class BaseIngestionSource:
     """
-    Interface cho mọi nguồn ingestion (PostgreSQL, File,...)
+    Interface for any ingestion sources (PostgreSQL, File,...)
     """
 
     def load(self) -> List[RawDocument]:

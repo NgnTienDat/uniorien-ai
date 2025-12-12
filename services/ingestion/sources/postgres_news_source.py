@@ -1,4 +1,3 @@
-# service/ingestion/sources/postgres_news_source.py
 from __future__ import annotations
 from typing import List, Dict, Any
 from components.manager import SQLDatabaseManager
@@ -6,10 +5,6 @@ from services.ingestion.sources.base_source import BaseIngestionSource, RawDocum
 
 
 class PostgresNewsSource(BaseIngestionSource):
-    """
-    Ingest bài báo từ bảng news.
-    """
-
     QUERY = """
         SELECT
             id,
