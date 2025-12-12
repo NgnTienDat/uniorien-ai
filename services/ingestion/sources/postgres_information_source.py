@@ -6,25 +6,29 @@ from services.ingestion.sources.base_source import BaseIngestionSource, RawDocum
 
 
 class PostgresInformationSource(BaseIngestionSource):
-    """
-    Ingest mô tả trường đại học từ bảng university_information.
-    """
 
     QUERY = """
         SELECT
-            university_id AS id,
+            id,
             university_id,
-            description AS text,
-            updated_at AS created_at
+            about AS text,
+            created_at,
+            founded,
+            institution_type,
+            location,
+            name,
+            programs_offered,
+            students,
+            website_address
         FROM university_information
-        WHERE description IS NOT NULL AND TRIM(description) <> ''
+        WHERE about IS NOT NULL AND TRIM(about) <> ''
     """
 
     def load(self) -> List[RawDocument]:
         db = SQLDatabaseManager.instance().get_db()
-        rows = db.run(self.QUERY)
+        rows: List[Dict[str, Any]] = db.run(self.QUERY)
 
-        documents = []
+        documents: List[RawDocument] = []
         for row in rows:
             doc_id = f"profile_{row['id']}"
             metadata = {
@@ -32,7 +36,14 @@ class PostgresInformationSource(BaseIngestionSource):
                 "type": "profile",
                 "source_table": "university_information",
                 "source_id": row["id"],
-                "created_at": row.get("created_at"),
+                "created_at": str(row.get("created_at")),
+                "founded": str(row.get("founded")),
+                "institution_type": row.get("institution_type"),
+                "location": row.get("location"),
+                "name": row.get("name"),
+                "programs_offered": row.get("programs_offered"),
+                "students": row.get("students"),
+                "website_address": row.get("website_address"),
             }
             documents.append(RawDocument(id=doc_id, text=row["text"], metadata=metadata))
 

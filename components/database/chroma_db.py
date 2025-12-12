@@ -7,10 +7,6 @@ from components.interfaces import IVectorDatabase
 
 
 class ChromaDB(IVectorDatabase):
-    """
-    ChromaDB mới (>=0.5) – client theo chuẩn mới.
-    Không dùng chromadb.Client() cũ nữa.
-    """
 
     def __init__(
         self,

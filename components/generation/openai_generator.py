@@ -1,5 +1,5 @@
 import os
-import openai
+from openai import OpenAI
 from typing import List, Dict, Optional
 
 from components.interfaces import IGenerator
@@ -15,8 +15,8 @@ class OpenAIGenerator(IGenerator):
         if not api_key:
             raise RuntimeError("OPENAI_API_KEY is missing.")
 
-        openai.api_key = api_key
         self.model = model
+        self.client = OpenAI(api_key=api_key)
 
     def generate(
         self,
@@ -36,15 +36,13 @@ class OpenAIGenerator(IGenerator):
             messages.extend(context)
 
         messages.append({"role": "user", "content": user_prompt})
-
+        params = {
+            "model": self.model,
+            "messages": messages,
+        }
         try:
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-            )
-            return response.choices[0].message["content"]
+            response = self.client.chat.completions.create(**params)
+            return response.choices[0].message.content.strip()
 
         except Exception as e:
             raise RuntimeError(f"OpenAI generation failed: {str(e)}")
