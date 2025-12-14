@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/services/rag/rag_document.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/rag/rag_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/rag/rag_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/rag/retriever.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/database/chroma_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/database/chroma_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/generation/ollama_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/generation/ollama_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/generation/openai_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/generation/openai_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ingestion/ingestion_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ingestion/ingestion_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ingestion/sources/base_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ingestion/sources/base_source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ingestion/sources/postgres_comments_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ingestion/sources/postgres_comments_source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ingestion/sources/postgres_information_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ingestion/sources/postgres_information_source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ingestion/sources/postgres_news_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ingestion/sources/postgres_news_source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rag_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/rag/prompt_template.py" afterDir="false" />
-    </list>
+    <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

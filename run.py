@@ -1,5 +1,8 @@
 import os
 from dotenv import load_dotenv
+
+from services.sql_agent.sql_agent_service import SQLAgentService
+
 load_dotenv()
 from components.manager import (
     SQLDatabaseManager,
@@ -32,14 +35,47 @@ if __name__ == "__main__":
     vector_db = ChromaDB()
     VectorDatabaseManager.instance().configure(vector_db)
 
-    rag_service = RAGService(top_k=3)
-    question = "Trường Đại học Bách Khoa Hà Nội thành lập năm bao nhiêu?"
-    response = rag_service.query(question)
-    print("Question:", question)
-    print("Answer:", response.answer)
+    db_uri = "postgresql://uniorien_chatbot_readonly:Tiendat964@localhost:5432/uniorien"
+    sql_db = PostgresDatabase(db_uri=db_uri)
+
+    SQLDatabaseManager.instance().configure(sql_db)
+
+    sql_agent = SQLAgentService()
+    # sql_agent.print_schema()
+    question = "Điểm chuẩn ngành công nghệ thông tin theo phương thức điểm thi THPT trường Đại học Bách Khoa Hà Nội năm 2025?"
+
+    result = sql_agent.query(question)
+
+    # 6. Debug output
+    print("===== SQL GENERATED =====")
+    print(result.sql)
+
+    print("\n===== COLUMNS =====")
+    print(result.columns)
+
+    print("\n===== ROW COUNT =====")
+    print(result.row_count())
+
+    print("\n===== FIRST ROW =====")
+    print(result.first_row())
+
+
+    # rag_service = RAGService(top_k=3)
+    # response = rag_service.query(question)
+    # print("Question:", question)
+    # print("Answer:", response.answer)
     # print(response.debug_context())
 
-
+    # include_tables = [
+    #     "university",
+    #     "admission_information",
+    #     "university_information",
+    #     "university_comments",
+    #     "major",
+    #     "major_for_group",
+    #     "news",
+    #     "benchmark",
+    # ],
 
     # # 1. Configure SQL Database
     # db_uri = "postgresql://uniorien_chatbot_readonly:Tiendat964@localhost:5432/uniorien"
