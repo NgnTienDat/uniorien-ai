@@ -44,30 +44,34 @@ class SQLAgentResult:
         """
         return self.rows[0] if self.rows else None
 
-    def to_human_text(self) -> str:
+    def to_human_text(self, max_rows: int = 5, compact: bool = False) -> str:
         """
-        Chuyển kết quả SQL sang dạng text dễ đọc cho người dùng.
-        Không suy luận, không thêm thông tin mới.
-
-        Với câu hỏi phức tạp:
-            đưa SQLAgentResult + question → LLM
-            LLM diễn giải thành tiếng Việt tự nhiên hơn
+        Chuyển SQL result thành text trung lập.
+        compact=True chỉ dùng cho SQL-only intent.
         """
 
         if not self.rows:
-            return "Not found any data."
+            return "Không có dữ liệu phù hợp trong cơ sở dữ liệu."
 
-        # Case 1: 1 row, 1 column
-        if len(self.rows) == 1 and len(self.columns) == 1:
+        # Compact mode: 1 row, 1 column
+        if compact and len(self.rows) == 1 and len(self.columns) == 1:
             col = self.columns[0]
-            value = self.rows[0].get(col)
-            return str(value)
+            return str(self.rows[0].get(col))
 
-        # Case 2: nhiều dòng → list ngắn gọn
         lines = []
-        for idx, row in enumerate(self.rows, start=1):
-            parts = [f"{col}: {row.get(col)}" for col in self.columns]
-            lines.append(f"{idx}. " + ", ".join(parts))
+        rows = self.rows[:max_rows]
+
+        for row in rows:
+            parts = [
+                f"{col}: {row[col]}"
+                for col in self.columns
+                if col in row
+            ]
+            lines.append("- " + ", ".join(parts))
+
+        if len(self.rows) > max_rows:
+            lines.append(f"... và {len(self.rows) - max_rows} dòng khác")
 
         return "\n".join(lines)
+
 

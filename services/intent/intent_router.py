@@ -4,7 +4,12 @@ from services.intent.intent_result import IntentResult
 
 class IntentRouter:
     """
-    Rule-based intent router for UniOrien AI.
+    Rule-based intent router for UniOrien AI (v2).
+
+    Trách nhiệm:
+    - Phân loại intent
+    - Gán response_mode phù hợp
+    - Không xử lý dữ liệu, không gọi service
     """
 
     SQL_KEYWORDS = [
@@ -18,6 +23,7 @@ class IntentRouter:
         "danh sách",
         "top",
         "so sánh",
+        "điểm chuẩn",
     ]
 
     RAG_KEYWORDS = [
@@ -28,6 +34,7 @@ class IntentRouter:
         "ưu điểm",
         "nhược điểm",
         "thế nào",
+        "ra sao",
     ]
 
     def route(self, query: str) -> IntentResult:
@@ -41,7 +48,8 @@ class IntentRouter:
             return IntentResult(
                 intent=QueryIntent.HYBRID,
                 confidence=0.85,
-                reason="Query requires structured data and explanation",
+                reason="Query requires both structured data and explanation",
+                response_mode="verbose",
             )
 
         if sql_score > 0:
@@ -49,10 +57,12 @@ class IntentRouter:
                 intent=QueryIntent.SQL,
                 confidence=0.9,
                 reason="Detected statistical / quantitative intent",
+                response_mode="compact",
             )
 
         return IntentResult(
             intent=QueryIntent.RAG,
             confidence=0.8,
             reason="Default to knowledge-based retrieval",
+            response_mode="verbose",
         )
