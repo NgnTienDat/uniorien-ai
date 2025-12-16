@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="" />
+    <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/schemas/chat_request.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/chat_response.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/sql_agent/sql_answer_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/orchestrator/chat_orchestrator.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/orchestrator/chat_orchestrator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/sql_agent/sql_agent_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/sql_agent/sql_agent_service.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

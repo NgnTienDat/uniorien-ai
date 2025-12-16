@@ -7,6 +7,7 @@ from services.intent.intent_result import IntentResult
 
 from services.rag.rag_service import RAGService
 from services.sql_agent.sql_agent_service import SQLAgentService
+from services.sql_agent.sql_answer_service import SQLAnswerService
 from services.sql_agent.sql_result import SQLAgentResult
 from services.rag.rag_response import RAGResponse
 from services.hybrid.hybrid_answer_service import HybridAnswerService
@@ -53,8 +54,13 @@ class ChatOrchestrator:
     def _handle_sql(self, query: str, intent: IntentResult) -> Dict:
         sql_result: SQLAgentResult = self.sql_service.query(query)
 
+        answer_service = SQLAnswerService()
+        answer_text = answer_service.generate(
+            question=query,
+            sql_result=sql_result,
+        )
         return {
-            "answer": sql_result.to_human_text(),
+            "answer": answer_text,
             "intent": intent.intent.value,
             "data": {
                 "sql": sql_result.sql,
