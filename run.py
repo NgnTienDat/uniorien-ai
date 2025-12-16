@@ -1,63 +1,87 @@
 import os
 from dotenv import load_dotenv
 
-from services.sql_agent.sql_agent_service import SQLAgentService
-
-load_dotenv()
-from components.manager import (
-    SQLDatabaseManager,
-    EmbeddingManager,
-    VectorDatabaseManager,
-    GenerationManager,
-)
-from components.database.postgres_db import PostgresDatabase
-from components.embedding.sentence_transformer_embedder import SentenceTransformerEmbedder
 from components.generation.openai_generator import OpenAIGenerator
 from components.generation.ollama_generator import OllamaGenerator
+
 from components.database.chroma_db import ChromaDB
+from components.database.postgres_db import PostgresDatabase
+from components.embedding.sentence_transformer_embedder import SentenceTransformerEmbedder
 
-from services.ingestion.ingestion_service import IngestionService
-from services.ingestion.sources.postgres_comments_source import PostgresCommentsSource
-from services.ingestion.sources.postgres_information_source import PostgresInformationSource
-from services.rag.rag_service import RAGService
+from components.manager import SQLDatabaseManager, EmbeddingManager, VectorDatabaseManager, GenerationManager
 
-if __name__ == "__main__":
+load_dotenv()
+from fastapi import FastAPI
 
-    primary_llm_model = OpenAIGenerator()
-    ollama_model = OllamaGenerator()
-    GenerationManager.instance().configure(primary=primary_llm_model, fallback=ollama_model)
+
+
+from app.routes import router as chat_router
+
+
+def create_app() -> FastAPI:
+    uniorien_app = FastAPI(
+        title="UniOrien AI",
+        version="0.1.0",
+    )
+
+    primary_llm = OpenAIGenerator()
+    fallback_llm = OllamaGenerator()
+    GenerationManager.instance().configure(
+        primary=primary_llm,
+        fallback=fallback_llm,
+    )
 
     embedder = SentenceTransformerEmbedder(
-            model_name="AITeamVN/Vietnamese_Embedding"
-        )
+        model_name="AITeamVN/Vietnamese_Embedding"
+    )
     EmbeddingManager.instance().configure(embedder)
 
     vector_db = ChromaDB()
     VectorDatabaseManager.instance().configure(vector_db)
 
-    db_uri = "postgresql://uniorien_chatbot_readonly:Tiendat964@localhost:5432/uniorien"
-    sql_db = PostgresDatabase(db_uri=db_uri)
-
+    sql_db = PostgresDatabase(
+        db_uri=os.getenv("DATABASE_URI")
+    )
     SQLDatabaseManager.instance().configure(sql_db)
 
-    sql_agent = SQLAgentService()
-    # sql_agent.print_schema()
-    question = "Điểm chuẩn ngành công nghệ thông tin theo phương thức điểm thi THPT trường Đại học Bách Khoa Hà Nội năm 2025?"
+    uniorien_app.include_router(chat_router, prefix="/api")
 
-    result = sql_agent.query(question)
 
-    # 6. Debug output
-    print("===== SQL GENERATED =====")
-    print(result.sql)
 
-    print("\n===== COLUMNS =====")
-    print(result.columns)
+    return uniorien_app
 
-    print("\n===== ROW COUNT =====")
-    print(result.row_count())
 
-    print("\n===== FIRST ROW =====")
-    print(result.first_row())
+app = create_app()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # # 6. Debug output
+    # print("===== SQL GENERATED =====")
+    # print(result.sql)
+    #
+    # print("\n===== COLUMNS =====")
+    # print(result.columns)
+    #
+    # print("\n===== ROW COUNT =====")
+    # print(result.row_count())
+    #
+    # print("\n===== FIRST ROW =====")
+    # print(result.first_row())
 
 
     # rag_service = RAGService(top_k=3)
@@ -106,7 +130,7 @@ if __name__ == "__main__":
 
 
 
-from components.manager import SQLDatabaseManager
+from components.manager import SQLDatabaseManager, EmbeddingManager, VectorDatabaseManager
 from components.database.postgres_db import PostgresDatabase
 
 from components.manager import GenerationManager

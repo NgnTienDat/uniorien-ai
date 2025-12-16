@@ -92,8 +92,8 @@ class SQLAgentService:
 
     def query(self, question: str) -> SQLAgentResult:
         sql = self.generate_sql(question)
-        print("=== GENERATED SQL ===")
-        print(sql)
+        # print("=== GENERATED SQL ===")
+        # print(sql)
         return self._execute_sql(sql)
 
     def print_schema(self):
