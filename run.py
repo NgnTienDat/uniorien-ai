@@ -51,14 +51,15 @@ def create_app() -> FastAPI:
 
     uniorien_app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "http://localhost:5173",
-        ],
+        allow_origins=["http://localhost:5173"],
         allow_credentials=True,
-        allow_methods=["GET", "POST"],
-        allow_headers=["Authorization", "Content-Type"],
+        allow_methods=["*"],
+        allow_headers=[
+            "Authorization",
+            "Content-Type",
+            "x-admin-token"  # BẮT BUỘC phải có cái này để FE gửi được token
+        ],
     )
-
     initialize_app()
 
     api_prefix = "/api/v1"
