@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/ingestion_routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev.run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/ingest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/ingestion/ingest_status_store.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/ingestion/status.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chat_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ingestion_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/ingestion_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
