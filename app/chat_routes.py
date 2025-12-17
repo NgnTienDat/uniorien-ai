@@ -4,11 +4,9 @@ from app.schemas.chat_request import ChatRequest
 from app.schemas.chat_response import ChatResponse
 from services.orchestrator.chat_orchestrator import ChatOrchestrator
 
-router = APIRouter(tags=["Chat"])
+router = APIRouter(prefix="/chat", tags=["Chat"])
 
-
-
-@router.post("/chat", response_model=ChatResponse)
+@router.post("", response_model=ChatResponse)
 def chat(request: ChatRequest):
     orchestrator = ChatOrchestrator()
     try:
