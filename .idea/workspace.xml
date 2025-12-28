@@ -5,13 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7db3b838-2943-4eda-8cb0-38e6822c823e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/schemas/ingest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/ingestion/ingest_status_store.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/ingestion/status.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/rate_limit/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/rate_limit/identity.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/rate_limit/limiter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/rate_limit/store.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uniorien-ai.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uniorien-ai.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ingestion_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/ingestion_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/chat_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chat_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file_review.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/guardrail_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Dockerfile" />
         <option value="Python Script" />
       </list>
     </option>
@@ -51,22 +58,27 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Python.run.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Web System Development/uniorien/source/uniorien-ai/app/rate_limit&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Web System Development\uniorien\source\uniorien-ai\app\rate_limit" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Web System Development\uniorien\source\uniorien-ai\services\rag" />
       <recent name="D:\Web System Development\uniorien\source\uniorien-ai\services\ingestion" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="uniorien-ai" />
       <option name="ENV_FILES" value="" />
@@ -89,8 +101,23 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Python.run" />
       </list>
     </recent_temporary>

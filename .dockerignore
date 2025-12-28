@@ -1,0 +1,21 @@
+# Environments
+.venv/
+venv/
+ENV/
+
+# Databases
+chroma_store/
+
+# Python logs & caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Project docs & misc
+docs/
+.git/
+.env
+
+dev.run.py

@@ -72,3 +72,7 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+"""
+    ENTER this command to run app: uvicorn run:app --reload
+"""
